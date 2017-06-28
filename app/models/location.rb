@@ -1,3 +1,5 @@
 class Location < ActiveRecord::Base
-  has_and_belongs_to_many :plants
+  belongs_to :user
+  has_many :plant_locations
+  has_many :plants, through: :plant_locations
 end

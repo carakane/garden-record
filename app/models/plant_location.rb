@@ -1,4 +1,4 @@
 class PlantLocation < ActiveRecord::Base
-  belongs_to :locations
-  belongs_to :plants
+  belongs_to :location
+  belongs_to :plant
 end
