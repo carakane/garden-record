@@ -34,5 +34,14 @@ class UsersController < ApplicationController
       end
   end
 
+  get '/users/:username/edit' do
+    if logged_in?
+      @user = User.find_by(:username => params[:username])
+      if @user.id == current_user.id
+        erb :'/users/user_edit'
+      end
+    end
+  end
+
 
 end
