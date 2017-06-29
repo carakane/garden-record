@@ -1,11 +1,25 @@
 Welcome, <%= @user.name %>
-
+<br></br>
 Your locations:
 <% @user.locations.each do |location| %>
   <%= location.name %>
+  <br></br>
 <% end %>
+<br></br>
 
 Your plants:
 <% @user.plants.each do |plant| %>
   <%= plant.name %>
+  <br></br>
 <% end %>
+<br></br>
+
+<a href="/users/<%= @user.username %>/edit">Edit Your Profile</a>
+<br></br>
+<a href="/plants/new">New plant</a>
+<br></br>
+<a href="/locations/new">New location</a>
+
+<form action="/logout" method="get">
+  <input type="submit" value="Logout">
+</form>
