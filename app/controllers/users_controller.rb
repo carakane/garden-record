@@ -10,7 +10,9 @@ class UsersController < ApplicationController
 
   post '/signup' do
     @user = User.create(params["user"])
-    erb :'/users/index'
+    session[:user_id] = @user.id
+    # binding.pry
+    redirect "/users/#{@user.username}"
   end
 
   get '/login' do
@@ -19,18 +21,33 @@ class UsersController < ApplicationController
 
   post '/login' do
     @user = User.find_by(:username => params["username"])
-    if @user.password == params["password"]
+    # binding.pry
+    if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
-      redirect '/users/:username'
+      # binding.pry
+      redirect "/users/#{@user.username}"
+    end
+  end
+
+  get "/logout" do
+    if logged_in?
+      session.clear
+      redirect '/'
+    else
+      redirect :'/'
     end
   end
 
   get '/users/:username' do
     if logged_in?
         @user = User.find_by(:username => params[:username])
+        # binding.pry
         if @user.id == current_user.id
+          # binding.pry
           erb :'/users/index'
         end
+      else
+        redirect :'/login'
       end
   end
 
@@ -38,6 +55,18 @@ class UsersController < ApplicationController
     if logged_in?
       @user = User.find_by(:username => params[:username])
       if @user.id == current_user.id
+        # binding.pry
+        erb :'/users/user_edit'
+      end
+    end
+  end
+
+  patch '/users/:username/edit' do
+    if logged_in?
+      @user = User.find_by(:id => params["id"])
+      if @user.id == current_user.id
+        # binding.pry
+        @user.update(params["user"])
         erb :'/users/user_edit'
       end
     end
