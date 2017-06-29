@@ -7,3 +7,9 @@ Edit your profile
   <input type="hidden" name="user[password]" value="<%= @user.password %>">
 <input type="submit" value="Submit">
 </form>
+
+Delete Your Profile
+<form action="/users/<%= @user.username %>/delete" method="post">
+  <input id="hidden" type="hidden" name="_method" value="delete">
+  <input type="submit" value="Delete">
+</form>
