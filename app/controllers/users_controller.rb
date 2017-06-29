@@ -10,6 +10,7 @@ class UsersController < ApplicationController
 
   post '/signup' do
     @user = User.create(params["user"])
+    erb :'/users/index'
   end
 
   get '/login' do
@@ -23,5 +24,15 @@ class UsersController < ApplicationController
       redirect '/users/:username'
     end
   end
+
+  get '/users/:username' do
+    if logged_in?
+        @user = User.find_by(:username => params[:username])
+        if @user.id == current_user.id
+          erb :'/users/index'
+        end
+      end
+  end
+
 
 end
