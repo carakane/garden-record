@@ -1,0 +1,11 @@
+Welcome, <%= @user.name %>
+
+Your locations:
+<% @user.locations.each do |location| %>
+  <%= location.name %>
+<% end %>
+
+Your plants:
+<% @user.plants.each do |plant| %>
+  <%= plant.name %>
+<% end %>
