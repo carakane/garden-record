@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 
   get '/signup' do
     if logged_in?
-      redirect "/users/:username"
+      redirect "/users/#{current_user.username}"
     else
       erb :'/users/new_user'
     end
@@ -16,7 +16,11 @@ class UsersController < ApplicationController
   end
 
   get '/login' do
-    erb :'/users/login'
+    if logged_in?
+      redirect "/users/#{current_user.username}"
+    else
+      erb :'/users/login'
+    end
   end
 
   post '/login' do
@@ -67,7 +71,7 @@ class UsersController < ApplicationController
       if @user.id == current_user.id
         # binding.pry
         @user.update(params["user"])
-        erb :'/users/user_edit'
+          redirect "/users/#{@user.username}"
       end
     end
   end
