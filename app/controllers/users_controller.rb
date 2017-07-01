@@ -78,10 +78,11 @@ class UsersController < ApplicationController
 
   delete '/users/:username/delete' do
     if logged_in?
-      @user = User.find_by(:username => params[:username])
+      @user = User.find_by(:id => params["id"])
       if @user.id == current_user.id
         @user.delete
-        erb :'/users/user_delete'
+        session.clear
+        erb :index
       end
     end
   end
