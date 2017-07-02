@@ -10,5 +10,13 @@ class PlantsController < ApplicationController
   post '/plants/new' do
     # binding.pry
     @plant = Plant.create(params["plant"])
+    redirect "/plants/#{@plant.id}"
   end
+
+  get '/plants/:id' do
+    @user = current_user
+    @plant = Plant.find_by(:id => params[:id])
+    erb :'/plants/show'
+  end
+
 end
