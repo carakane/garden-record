@@ -2,7 +2,8 @@ class LocationsController < ApplicationController
 
   get '/locations' do
     if logged_in?
-      @locations = Location.all
+      @user = current_user
+      @locations = @user.locations
       erb :'/locations/index'
     else redirect '/login'
     end

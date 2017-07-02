@@ -2,7 +2,8 @@ class PlantsController < ApplicationController
 
   get '/plants' do
     if logged_in?
-      @plants = Plant.all
+      @user = current_user
+      @plants = @user.plants
       erb :'/plants/index'
     else redirect '/login'
     end
