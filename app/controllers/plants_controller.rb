@@ -33,6 +33,7 @@ class PlantsController < ApplicationController
       # binding.pry
       @user = current_user
       @location = Location.create(:name => params["location_name"])
+      flash[:message1] = "You have added #{@location.name}"
       @user.locations << @location
       @location.plants << @plant
     end
@@ -43,8 +44,9 @@ class PlantsController < ApplicationController
   get '/plants/:slug' do
     if logged_in?
       @user = current_user
-      # binding.pry
-      @plant = Plant.find_by_slug(params[:slug])
+      binding.pry
+      # @plant = Plant.find_by_slug(params[:slug])
+      @plant = @user.plants.find_by_slug(params[:slug])
       erb :'/plants/show'
     else
       flash[:message] = "Please Log In"

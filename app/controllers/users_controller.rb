@@ -38,25 +38,26 @@ class UsersController < ApplicationController
   get "/logout" do
     if logged_in?
       session.clear
+      flash[:message] = "You have logged out"
       redirect '/'
     else
-      redirect :'/'
+      redirect '/'
     end
   end
 
   get '/users/:username' do
     if logged_in?
-        @user = User.find_by(:username => params[:username])
+      @user = User.find_by(:username => params[:username])
         if @user == current_user
           erb :'/users/index'
         else
           flash[:message] = "You may only view your own homepage"
           redirect "/users/#{current_user.username}"
         end
-      else
-        flash[:message] = "Please Log In"
-        redirect :'/login'
-      end
+    else
+      flash[:message] = "Please Log In"
+      redirect :'/login'
+    end
   end
 
   get '/users/:username/edit' do
@@ -72,7 +73,6 @@ class UsersController < ApplicationController
       flash[:message] = "Please Log In"
       redirect :'/login'
     end
-    end
   end
 
   patch '/users/:username/edit' do
@@ -82,10 +82,14 @@ class UsersController < ApplicationController
       # binding.pry
       if @user.id == current_user.id && @user.authenticate(params["user"]["password"])
         @user.update(params["user"])
-          redirect "/users/#{@user.username}"
+        flash[:message] = "You have edited your profile"
+        redirect "/users/#{@user.username}"
       else
         redirect "/users/#{@user.username}"
       end
+    else
+      flash[:message] = "Please Log In"
+      redirect :'/login'
     end
   end
 
@@ -109,9 +113,13 @@ class UsersController < ApplicationController
       @user = User.find_by(:id => params["id"])
       if @user.id == current_user.id && @user.authenticate(params["user"]["password"])
         @user.update(:password => params["user_password"])
-          redirect "/users/#{@user.username}"
+        flash[:message] = "You have changed your password"
+        redirect "/users/#{@user.username}"
       else redirect "/users/#{@user.username}"
       end
+    else
+      flash[:message] = "Please Log In"
+      redirect :'/login'
     end
   end
 
@@ -126,6 +134,9 @@ class UsersController < ApplicationController
         redirect "/"
       else redirect "/users/#{@user.username}"
       end
+    else
+      flash[:message] = "Please Log In"
+      redirect :'/login'
     end
   end
 

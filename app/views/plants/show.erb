@@ -2,6 +2,10 @@
   <%= flash[:message] %>
   <br></br>
 <% end %>
+<% if flash.has?(:message1) %>
+  <%= flash[:message1] %>
+  <br></br>
+<% end %>
 
 Plant Name:<%= @plant.name %>
 <br></br>

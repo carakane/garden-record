@@ -61,7 +61,7 @@ class LocationsController < ApplicationController
     @user = current_user
     @location = Location.find_by_slug(params[:slug])
 
-    @plant_location = PlantLocation.where(location_id => @location)
+    @plant_location = PlantLocation.where(:location_id => @location.id)
     @plant_location.each do |entry|
       entry.delete
     end
