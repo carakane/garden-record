@@ -16,6 +16,13 @@ class PlantsController < ApplicationController
       @location = Location.find_by(:id => params["location"])
       @location.plants << @plant
     end
+    if params["location_name"]
+      # binding.pry
+      @user = current_user
+      @location = Location.create(:name => params["location_name"])
+      @user.locations << @location
+      @location.plants << @plant
+    end
     redirect "/plants/#{@plant.id}"
   end
 
