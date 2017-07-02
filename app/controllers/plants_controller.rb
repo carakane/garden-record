@@ -55,6 +55,12 @@ class PlantsController < ApplicationController
   delete '/plants/:id/delete' do
     @user = current_user
     @plant = Plant.find_by(:id => params[:id])
+
+    @plant_location = PlantLocation.where(:plant_id => @plant)
+    @plant_location.each do |entry|
+      entry.delete
+    end
+
     @plant.delete
     redirect "/users/#{@user.username}"
   end
