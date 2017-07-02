@@ -2,8 +2,8 @@ Location Name:<%= @location.name %>
 <br></br>
 Plants in Location:
 <% @location.plants.each do |plant| %>
-  <%= plant.name %>
-  <% end %>
+  <a href="/plants/<%= plant.id %>"><%= plant.name %></a>
   <br></br>
+  <% end %>
 
 <a href="/users/<%= @user.username %>">Your Homepage</a>

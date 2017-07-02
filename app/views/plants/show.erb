@@ -2,7 +2,7 @@ Plant Name:<%= @plant.name %>
 <br></br>
 Plant Locations:
 <% @plant.locations.each do |location| %>
-  <%= location.name %>
+    <a href="/locations/<%= location.id %>"><%= location.name %></a>
   <br></br>
   <% end %>
 
