@@ -62,9 +62,11 @@ class UsersController < ApplicationController
   patch '/users/:username/edit' do
     if logged_in?
       @user = User.find_by(:id => params["id"])
-      if @user.id == current_user.id
+      # binding.pry
+      if @user.id == current_user.id && @user.authenticate(params["user"]["password"])
         @user.update(params["user"])
           redirect "/users/#{@user.username}"
+      else redirect "/users/#{@user.username}"
       end
     end
   end
@@ -72,10 +74,11 @@ class UsersController < ApplicationController
   delete '/users/:username/delete' do
     if logged_in?
       @user = User.find_by(:id => params["id"])
-      if @user.id == current_user.id
+      if @user.id == current_user.id && @user.authenticate(params["user"]["password"])
         @user.delete
         session.clear
-        redirect "/index"
+        redirect "/"
+      else redirect "/users/#{@user.username}"
       end
     end
   end
