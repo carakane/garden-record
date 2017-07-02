@@ -71,6 +71,27 @@ class UsersController < ApplicationController
     end
   end
 
+  get '/users/:username/password' do
+    if logged_in?
+      @user = User.find_by(:username => params[:username])
+      if @user.id == current_user.id
+        erb :'/users/password'
+      end
+    end
+  end
+
+  patch '/users/:username/password' do
+    if logged_in?
+      @user = User.find_by(:id => params["id"])
+      if @user.id == current_user.id && @user.authenticate(params["user"]["password"])
+        @user.update(:password => params["user_password"])
+          redirect "/users/#{@user.username}"
+      else redirect "/users/#{@user.username}"
+      end
+    end
+  end
+
+
   delete '/users/:username/delete' do
     if logged_in?
       @user = User.find_by(:id => params["id"])
