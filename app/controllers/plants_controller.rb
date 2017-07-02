@@ -36,16 +36,22 @@ class PlantsController < ApplicationController
   end
 
   get '/plants/:slug' do
-    @user = current_user
-    # binding.pry
-    @plant = Plant.find_by_slug(params[:slug])
-    erb :'/plants/show'
+    if logged_in?
+      @user = current_user
+      # binding.pry
+      @plant = Plant.find_by_slug(params[:slug])
+      erb :'/plants/show'
+    else redirect '/login'
+    end
   end
 
   get '/plants/:slug/edit' do
-    @plant = Plant.find_by_slug(params[:slug])
-    @user = current_user
-    erb :'/plants/edit_plant'
+    if logged_in?
+      @plant = Plant.find_by_slug(params[:slug])
+      @user = current_user
+      erb :'/plants/edit_plant'
+    else redirect '/login'
+    end
   end
 
   patch '/plants/:slug/edit' do

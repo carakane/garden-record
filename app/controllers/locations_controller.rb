@@ -25,14 +25,20 @@ class LocationsController < ApplicationController
   end
 
   get '/locations/:slug' do
-    @user = current_user
-    @location = Location.find_by_slug(params[:slug])
-    erb :'/locations/show'
+    if logged_in?
+      @user = current_user
+      @location = Location.find_by_slug(params[:slug])
+      erb :'/locations/show'
+    else redirect '/login'
+    end
   end
 
     get '/locations/:slug/edit' do
-      @location = Location.find_by_slug(params[:slug])
-      erb :'/locations/edit_location'
+      if logged_in?
+        @location = Location.find_by_slug(params[:slug])
+        erb :'/locations/edit_location'
+      else redirect '/login'
+      end
     end
 
     patch '/locations/:slug/edit' do
@@ -53,6 +59,5 @@ class LocationsController < ApplicationController
       @location.delete
       redirect "/users/#{@user.username}"
     end
-
 
 end
