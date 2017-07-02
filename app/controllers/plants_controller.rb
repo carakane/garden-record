@@ -2,6 +2,7 @@ class PlantsController < ApplicationController
 
   get '/plants/new' do
     if logged_in?
+      @user = current_user
       erb :'/plants/new_plant'
     else redirect '/login'
     end
@@ -10,6 +11,11 @@ class PlantsController < ApplicationController
   post '/plants/new' do
     # binding.pry
     @plant = Plant.create(params["plant"])
+    if params["location"]
+      # binding.pry
+      @location = Location.find_by(:id => params["location"])
+      @location.plants << @plant
+    end
     redirect "/plants/#{@plant.id}"
   end
 

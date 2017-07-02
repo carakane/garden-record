@@ -1,5 +1,11 @@
 New Plant
 <form action="/plants/new" method="post">
   <label for="plant[name]">Name:</label><input type="text" name="plant[name]" required>
+
+  Chose an existing location:
+  <% @user.locations.each do |location| %>
+  <input type="checkbox" name="location" value="<%= location.id %>"><%= location.name %></input>
+  <% end %>
+
   <input type="submit" value="Submit">
 </form>
