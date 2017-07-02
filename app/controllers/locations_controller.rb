@@ -29,4 +29,23 @@ class LocationsController < ApplicationController
     erb :'/locations/show'
   end
 
+    get '/locations/:id/edit' do
+      @location = Location.find_by(:id => params[:id])
+      erb :'/locations/edit_location'
+    end
+
+    patch '/locations/:id/edit' do
+      @location = Location.find_by(:id => params[:id])
+      @location.update(:name => params["location_name"])
+      redirect "/locations/#{@location.id}"
+    end
+
+    delete '/locations/:id/delete' do
+      @user = current_user
+      @location = Location.find_by(:id => params[:id])
+      @location.delete
+      redirect "/users/#{@user.username}"
+    end
+
+
 end
