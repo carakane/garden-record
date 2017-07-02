@@ -11,7 +11,6 @@ class UsersController < ApplicationController
   post '/signup' do
     @user = User.create(params["user"])
     session[:user_id] = @user.id
-    # binding.pry
     redirect "/users/#{@user.username}"
   end
 
@@ -25,10 +24,8 @@ class UsersController < ApplicationController
 
   post '/login' do
     @user = User.find_by(:username => params["username"])
-    # binding.pry
-    if @user && @user.authenticate(params[:password])
+    if @user && @user.authenticate(params["password"])
       session[:user_id] = @user.id
-      # binding.pry
       redirect "/users/#{@user.username}"
     end
   end
@@ -45,9 +42,7 @@ class UsersController < ApplicationController
   get '/users/:username' do
     if logged_in?
         @user = User.find_by(:username => params[:username])
-        # binding.pry
         if @user.id == current_user.id
-          # binding.pry
           erb :'/users/index'
         end
       else
@@ -59,7 +54,6 @@ class UsersController < ApplicationController
     if logged_in?
       @user = User.find_by(:username => params[:username])
       if @user.id == current_user.id
-        # binding.pry
         erb :'/users/user_edit'
       end
     end
@@ -69,7 +63,6 @@ class UsersController < ApplicationController
     if logged_in?
       @user = User.find_by(:id => params["id"])
       if @user.id == current_user.id
-        # binding.pry
         @user.update(params["user"])
           redirect "/users/#{@user.username}"
       end
@@ -82,10 +75,9 @@ class UsersController < ApplicationController
       if @user.id == current_user.id
         @user.delete
         session.clear
-        erb :index
+        redirect "/index"
       end
     end
   end
-
 
 end
