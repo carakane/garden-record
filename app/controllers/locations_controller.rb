@@ -1,5 +1,13 @@
 class LocationsController < ApplicationController
 
+  get '/locations' do
+    if logged_in?
+      @locations = Location.all
+      erb :'/locations/index'
+    else redirect '/login'
+    end
+  end
+
   get '/locations/new' do
     if logged_in?
       erb :'/locations/new_location'

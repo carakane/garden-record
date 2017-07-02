@@ -1,6 +1,6 @@
 Welcome, <%= @user.name %>
 <br></br>
-Your locations:
+<a href="/locations">Your locations:</a>
 <% @user.locations.each do |location| %>
   <a href="/locations/<%= location.id %>"><%= location.name %></a>
   <br></br>
