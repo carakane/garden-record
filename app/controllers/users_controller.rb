@@ -42,8 +42,10 @@ class UsersController < ApplicationController
   get '/users/:username' do
     if logged_in?
         @user = User.find_by(:username => params[:username])
-        if @user.id == current_user.id
+        if @user == current_user
           erb :'/users/index'
+        else
+          redirect "/users/#{current_user.username}"
         end
       else
         redirect :'/login'
