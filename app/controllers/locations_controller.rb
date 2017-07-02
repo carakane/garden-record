@@ -5,14 +5,18 @@ class LocationsController < ApplicationController
       @user = current_user
       @locations = @user.locations
       erb :'/locations/index'
-    else redirect '/login'
+    else
+      flash[:message] = "Please Log In"
+      redirect '/login'
     end
   end
 
   get '/locations/new' do
     if logged_in?
       erb :'/locations/new_location'
-    else redirect '/login'
+    else
+      flash[:message] = "Please Log In"
+      redirect '/login'
     end
   end
 
@@ -21,6 +25,7 @@ class LocationsController < ApplicationController
     @user = current_user
     @location = Location.create(params["location"])
     @user.locations << @location
+    flash[:message] = "You have created #{@location.name}"
     redirect "/locations/#{@location.slug}"
   end
 
@@ -29,35 +34,41 @@ class LocationsController < ApplicationController
       @user = current_user
       @location = Location.find_by_slug(params[:slug])
       erb :'/locations/show'
-    else redirect '/login'
+    else
+      flash[:message] = "Please Log In"
+      redirect '/login'
     end
   end
 
-    get '/locations/:slug/edit' do
-      if logged_in?
-        @location = Location.find_by_slug(params[:slug])
-        erb :'/locations/edit_location'
-      else redirect '/login'
-      end
-    end
-
-    patch '/locations/:slug/edit' do
+  get '/locations/:slug/edit' do
+    if logged_in?
       @location = Location.find_by_slug(params[:slug])
-      @location.update(:name => params["location_name"])
-      redirect "/locations/#{@location.slug}"
+      erb :'/locations/edit_location'
+    else
+      flash[:message] = "Please Log In"
+      redirect '/login'
+    end
+  end
+
+  patch '/locations/:slug/edit' do
+    @location = Location.find_by_slug(params[:slug])
+    @location.update(:name => params["location_name"])
+    flash[:message] = "You have edited #{@location.name}"
+    redirect "/locations/#{@location.slug}"
+  end
+
+  delete '/locations/:slug/delete' do
+    @user = current_user
+    @location = Location.find_by_slug(params[:slug])
+
+    @plant_location = PlantLocation.where(location_id => @location)
+    @plant_location.each do |entry|
+      entry.delete
     end
 
-    delete '/locations/:slug/delete' do
-      @user = current_user
-      @location = Location.find_by_slug(params[:slug])
-
-      @plant_location = PlantLocation.where(location_id => @location)
-      @plant_location.each do |entry|
-        entry.delete
-      end
-
-      @location.delete
-      redirect "/users/#{@user.username}"
-    end
+    flash[:message] = "You have deleted #{@location.name}"
+    @location.delete
+    redirect "/users/#{@user.username}"
+  end
 
 end

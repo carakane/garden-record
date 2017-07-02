@@ -1,4 +1,10 @@
+
 Garden Record
+
+<% if flash.has?(:message) %>
+  <%= flash[:message] %>
+  <br></br>
+<% end %>
 
 <form action="/signup" method="get">
   <input type="submit" value="Sign Up">

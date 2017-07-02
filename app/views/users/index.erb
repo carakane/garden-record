@@ -1,3 +1,8 @@
+<% if flash.has?(:message) %>
+  <%= flash[:message] %>
+  <br></br>
+<% end %>
+
 Welcome, <%= @user.name %>
 <br></br>
 <a href="/locations">Your locations:</a>

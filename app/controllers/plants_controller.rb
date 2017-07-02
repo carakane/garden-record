@@ -5,7 +5,9 @@ class PlantsController < ApplicationController
       @user = current_user
       @plants = @user.plants
       erb :'/plants/index'
-    else redirect '/login'
+    else
+      flash[:message] = "Please Log In"
+      redirect '/login'
     end
   end
 
@@ -13,7 +15,9 @@ class PlantsController < ApplicationController
     if logged_in?
       @user = current_user
       erb :'/plants/new_plant'
-    else redirect '/login'
+    else
+      flash[:message] = "Please Log In"
+      redirect '/login'
     end
   end
 
@@ -32,6 +36,7 @@ class PlantsController < ApplicationController
       @user.locations << @location
       @location.plants << @plant
     end
+    flash[:message] = "You have added #{@plant.name}"
     redirect "/plants/#{@plant.slug}"
   end
 
@@ -41,7 +46,9 @@ class PlantsController < ApplicationController
       # binding.pry
       @plant = Plant.find_by_slug(params[:slug])
       erb :'/plants/show'
-    else redirect '/login'
+    else
+      flash[:message] = "Please Log In"
+      redirect '/login'
     end
   end
 
@@ -50,7 +57,9 @@ class PlantsController < ApplicationController
       @plant = Plant.find_by_slug(params[:slug])
       @user = current_user
       erb :'/plants/edit_plant'
-    else redirect '/login'
+    else
+      flash[:message] = "Please Log In"
+      redirect '/login'
     end
   end
 
@@ -76,6 +85,7 @@ class PlantsController < ApplicationController
       @location.plants << @plant
     end
 
+    flash[:message] = "You have edited #{@plant.name}"
     redirect "/plants/#{@plant.slug}"
   end
 
@@ -88,9 +98,9 @@ class PlantsController < ApplicationController
       entry.delete
     end
 
+    flash[:message] = "You have deleted #{@plant.name}"
     @plant.delete
     redirect "/users/#{@user.username}"
   end
-
 
 end

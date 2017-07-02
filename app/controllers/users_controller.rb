@@ -2,6 +2,7 @@ class UsersController < ApplicationController
 
   get '/signup' do
     if logged_in?
+      flash[:message] = "You already have an account"
       redirect "/users/#{current_user.username}"
     else
       erb :'/users/new_user'
@@ -16,6 +17,7 @@ class UsersController < ApplicationController
 
   get '/login' do
     if logged_in?
+      flash[:message] = "You are already logged in"
       redirect "/users/#{current_user.username}"
     else
       erb :'/users/login'
@@ -27,7 +29,9 @@ class UsersController < ApplicationController
     if @user && @user.authenticate(params["password"])
       session[:user_id] = @user.id
       redirect "/users/#{@user.username}"
-    else redirect '/users/login'
+    else
+      flash[:message] = "Please try again"
+      redirect '/users/login'
     end
   end
 
@@ -46,9 +50,11 @@ class UsersController < ApplicationController
         if @user == current_user
           erb :'/users/index'
         else
+          flash[:message] = "You may only view your own homepage"
           redirect "/users/#{current_user.username}"
         end
       else
+        flash[:message] = "Please Log In"
         redirect :'/login'
       end
   end
@@ -58,18 +64,27 @@ class UsersController < ApplicationController
       @user = User.find_by(:username => params[:username])
       if @user.id == current_user.id
         erb :'/users/user_edit'
+      else
+        flash[:message] = "You may only edit your own homepage"
+        redirect "/users/#{current_user.username}"
       end
+    else
+      flash[:message] = "Please Log In"
+      redirect :'/login'
+    end
     end
   end
 
   patch '/users/:username/edit' do
+    ## unnecessary code?
     if logged_in?
       @user = User.find_by(:id => params["id"])
       # binding.pry
       if @user.id == current_user.id && @user.authenticate(params["user"]["password"])
         @user.update(params["user"])
           redirect "/users/#{@user.username}"
-      else redirect "/users/#{@user.username}"
+      else
+        redirect "/users/#{@user.username}"
       end
     end
   end
@@ -79,11 +94,17 @@ class UsersController < ApplicationController
       @user = User.find_by(:username => params[:username])
       if @user.id == current_user.id
         erb :'/users/password'
+      else
+        redirect "/users/#{current_user.username}/password"
       end
+    else
+      flash[:message] = "Please Log In"
+      redirect :'/login'
     end
   end
 
   patch '/users/:username/password' do
+    ## unnecessary code?
     if logged_in?
       @user = User.find_by(:id => params["id"])
       if @user.id == current_user.id && @user.authenticate(params["user"]["password"])
@@ -96,6 +117,7 @@ class UsersController < ApplicationController
 
 
   delete '/users/:username/delete' do
+    ##unnecessary code?
     if logged_in?
       @user = User.find_by(:id => params["id"])
       if @user.id == current_user.id && @user.authenticate(params["user"]["password"])
