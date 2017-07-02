@@ -1,0 +1,9 @@
+Location Name:<%= @location.name %>
+<br></br>
+Plants in Location:
+<% @location.plants.each do |plant| %>
+  <%= plant.name %>
+  <% end %>
+  <br></br>
+
+<a href="/users/<%= @user.username %>">Your Homepage</a>
