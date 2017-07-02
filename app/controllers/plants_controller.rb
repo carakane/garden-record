@@ -32,23 +32,24 @@ class PlantsController < ApplicationController
       @user.locations << @location
       @location.plants << @plant
     end
-    redirect "/plants/#{@plant.id}"
+    redirect "/plants/#{@plant.slug}"
   end
 
-  get '/plants/:id' do
+  get '/plants/:slug' do
     @user = current_user
-    @plant = Plant.find_by(:id => params[:id])
+    # binding.pry
+    @plant = Plant.find_by_slug(params[:slug])
     erb :'/plants/show'
   end
 
-  get '/plants/:id/edit' do
-    @plant = Plant.find_by(:id => params[:id])
+  get '/plants/:slug/edit' do
+    @plant = Plant.find_by_slug(params[:slug])
     @user = current_user
     erb :'/plants/edit_plant'
   end
 
-  patch '/plants/:id/edit' do
-    @plant = Plant.find_by(:id => params[:id])
+  patch '/plants/:slug/edit' do
+    @plant = Plant.find_by_slug(params[:slug])
 
     if params["plant_name"] != ""
       @plant.update(:name => params["plant_name"])
@@ -69,12 +70,12 @@ class PlantsController < ApplicationController
       @location.plants << @plant
     end
 
-    redirect "/plants/#{@plant.id}"
+    redirect "/plants/#{@plant.slug}"
   end
 
-  delete '/plants/:id/delete' do
+  delete '/plants/:slug/delete' do
     @user = current_user
-    @plant = Plant.find_by(:id => params[:id])
+    @plant = Plant.find_by_slug(params[:slug])
 
     @plant_location = PlantLocation.where(:plant_id => @plant)
     @plant_location.each do |entry|

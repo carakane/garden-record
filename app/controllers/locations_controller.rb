@@ -21,29 +21,29 @@ class LocationsController < ApplicationController
     @user = current_user
     @location = Location.create(params["location"])
     @user.locations << @location
-    redirect "/locations/#{@location.id}"
+    redirect "/locations/#{@location.slug}"
   end
 
-  get '/locations/:id' do
+  get '/locations/:slug' do
     @user = current_user
-    @location = Location.find_by(:id => params[:id])
+    @location = Location.find_by_slug(params[:slug])
     erb :'/locations/show'
   end
 
-    get '/locations/:id/edit' do
-      @location = Location.find_by(:id => params[:id])
+    get '/locations/:slug/edit' do
+      @location = Location.find_by_slug(params[:slug])
       erb :'/locations/edit_location'
     end
 
-    patch '/locations/:id/edit' do
-      @location = Location.find_by(:id => params[:id])
+    patch '/locations/:slug/edit' do
+      @location = Location.find_by_slug(params[:slug])
       @location.update(:name => params["location_name"])
-      redirect "/locations/#{@location.id}"
+      redirect "/locations/#{@location.slug}"
     end
 
-    delete '/locations/:id/delete' do
+    delete '/locations/:slug/delete' do
       @user = current_user
-      @location = Location.find_by(:id => params[:id])
+      @location = Location.find_by_slug(params[:slug])
 
       @plant_location = PlantLocation.where(location_id => @location)
       @plant_location.each do |entry|
