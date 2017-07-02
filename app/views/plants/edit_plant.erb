@@ -1,0 +1,11 @@
+<form action="/plants/<%= @plant.id %>/edit" method="post">
+  <input id="hidden" type="hidden" name="_method" value="patch">
+  <label for="plant_name">Plant Name:</label><input type="text" name="plant_name" placeholder="<%= @plant.name %>">
+  <input type="submit" value="Edit">
+</form>
+
+
+<form action="/plants/<%= @plant.id %>/delete" method="post">
+  <input id="hidden" type="hidden" name="_method" value="delete">
+  <input type="submit" value="Delete">
+</form>

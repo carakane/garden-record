@@ -1,5 +1,13 @@
 class PlantsController < ApplicationController
 
+  get '/plants' do
+    if logged_in?
+      @plants = Plant.all
+      erb :'/plants/index'
+    else redirect '/login'
+    end
+  end
+
   get '/plants/new' do
     if logged_in?
       @user = current_user
@@ -31,5 +39,24 @@ class PlantsController < ApplicationController
     @plant = Plant.find_by(:id => params[:id])
     erb :'/plants/show'
   end
+
+  get '/plants/:id/edit' do
+    @plant = Plant.find_by(:id => params[:id])
+    erb :'/plants/edit_plant'
+  end
+
+  patch '/plants/:id/edit' do
+    @plant = Plant.find_by(:id => params[:id])
+    @plant.update(:name => params["plant_name"])
+    redirect "/plants/#{@plant.id}"
+  end
+
+  delete '/plants/:id/delete' do
+    @user = current_user
+    @plant = Plant.find_by(:id => params[:id])
+    @plant.delete
+    redirect "/users/#{@user.username}"
+  end
+
 
 end
