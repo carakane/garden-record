@@ -43,12 +43,32 @@ class PlantsController < ApplicationController
 
   get '/plants/:id/edit' do
     @plant = Plant.find_by(:id => params[:id])
+    @user = current_user
     erb :'/plants/edit_plant'
   end
 
   patch '/plants/:id/edit' do
     @plant = Plant.find_by(:id => params[:id])
-    @plant.update(:name => params["plant_name"])
+
+    if params["plant_name"] != ""
+      @plant.update(:name => params["plant_name"])
+    end
+
+    if params["locations"] != (@plant.locations)
+      @plant.locations.clear
+      @locations = Location.where(:id => params["locations"])
+      @locations.each do |location|
+        location.plants << @plant
+      end
+    end
+
+    if params["location_name"] != ""
+      @user = current_user
+      @location = Location.create(:name => params["location_name"])
+      @user.locations << @location
+      @location.plants << @plant
+    end
+
     redirect "/plants/#{@plant.id}"
   end
 

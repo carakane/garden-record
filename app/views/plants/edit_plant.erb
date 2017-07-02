@@ -1,6 +1,16 @@
+Edit Your Plant:
 <form action="/plants/<%= @plant.id %>/edit" method="post">
   <input id="hidden" type="hidden" name="_method" value="patch">
-  <label for="plant_name">Plant Name:</label><input type="text" name="plant_name" placeholder="<%= @plant.name %>">
+  Current name: <%= @plant.name %>
+  <label for="plant_name">New name:</label><input type="text" name="plant_name">
+
+  Choose an Existing Location:
+  <% @user.locations.each do |location| %>
+    <input type="checkbox" name="locations[]" value="<%= location.id %>" <%='checked' if @plant.locations.include?(location) %>><%= location.name %></input>
+  <% end %>
+
+  <label for="location_name">And/or add a new location:</label><input type="text" name="location_name">
+
   <input type="submit" value="Edit">
 </form>
 
