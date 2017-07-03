@@ -33,7 +33,11 @@ class LocationsController < ApplicationController
     if logged_in?
       @user = current_user
       @location = Location.find_by(:id => params[:id])
-      erb :'/locations/show'
+      if @location.user == @user
+        erb :'/locations/show'
+      else
+        redirect "/users/#{@user.username}"
+      end
     else
       flash[:message] = "Please Log In"
       redirect '/login'
@@ -42,8 +46,13 @@ class LocationsController < ApplicationController
 
   get '/locations/:id/edit' do
     if logged_in?
+      @user = current_user
       @location = Location.find_by(:id => params[:id])
-      erb :'/locations/edit_location'
+      if @location.user == @user
+        erb :'/locations/edit_location'
+      else
+        redirect "/users/#{@user.username}"
+      end
     else
       flash[:message] = "Please Log In"
       redirect '/login'

@@ -56,9 +56,13 @@ class PlantsController < ApplicationController
 
   get '/plants/:id/edit' do
     if logged_in?
-      @plant = Plant.find_by(:id => params[:id])
       @user = current_user
-      erb :'/plants/edit_plant'
+      @plant = Plant.find_by(:id => params[:id])
+      if @plant.user == @user
+        erb :'/plants/edit_plant'
+      else
+        redirect "/users/#{@user.username}"
+      end
     else
       flash[:message] = "Please Log In"
       redirect '/login'
@@ -76,7 +80,7 @@ class PlantsController < ApplicationController
       @plant.locations.clear
       @locations = Location.where(:id => params["locations"])
       @locations.each do |location|
-        location.plants << @plant
+      @location.plants << @plant
       end
     end
 
