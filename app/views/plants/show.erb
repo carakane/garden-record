@@ -7,9 +7,9 @@
   <br></br>
 <% end %>
 
-Plant Name:<%= @plant.name %>
+<h3>Plant Name:</h4><%= @plant.name %>
 <br></br>
-Plant Locations:
+<h3>Plant Locations:</h4>
 <% @plant.locations.each do |location| %>
     <a href="/locations/<%= location.id %>"><%= location.name %></a>
   <br></br>

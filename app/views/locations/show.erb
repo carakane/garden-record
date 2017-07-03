@@ -3,9 +3,9 @@
   <br></br>
 <% end %>
 
-Location Name:<%= @location.name %>
+<h4>Location Name:</h4><%= @location.name %>
 <br></br>
-Plants in Location:
+<h4>Plants in Location:</h4>
 <% @location.plants.each do |plant| %>
   <a href="/plants/<%= plant.id %>"><%= plant.name %></a>
   <br></br>

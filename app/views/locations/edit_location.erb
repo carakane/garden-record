@@ -1,12 +1,17 @@
+<h3>Edit Your Location</h3>
 <form action="/locations/<%= @location.id %>/edit" method="post">
   <input id="hidden" type="hidden" name="_method" value="patch">
   Current Name:<%= @location.name %>
+  <br></br>
   <label for="location_name">Location Name:</label><input type="text" name="location_name">
   <input type="submit" value="Edit">
 </form>
 
-
+<br></br>
 <form action="/locations/<%= @location.id %>/delete" method="post">
   <input id="hidden" type="hidden" name="_method" value="delete">
   <input type="submit" value="Delete">
 </form>
+
+<br></br>
+<a href="/users/<%= @user.username %>">Your Homepage</a>

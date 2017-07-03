@@ -1,4 +1,4 @@
-Edit your profile
+<h3>Edit your profile</h3>
 <form action="/users/<%= @user.username %>/edit" method="post">
   <input id="hidden" type="hidden" name="_method" value="patch">
   <label for="user[name]">Name:</label><input type="text" name="user[name]" value="<%= @user.name %>" required>
@@ -9,7 +9,8 @@ Edit your profile
 <input type="submit" value="Submit">
 </form>
 
-Delete Your Profile
+<br></br>
+<h3>Delete Your Profile</h3>
 <form action="/users/<%= @user.username %>/delete" method="post">
   <input id="hidden" type="hidden" name="_method" value="delete">
   <label for="user[password]">Enter your current password:</label><input type="password" name="user[password]" required>

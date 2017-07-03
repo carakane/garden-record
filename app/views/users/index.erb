@@ -3,16 +3,16 @@
   <br></br>
 <% end %>
 
-Welcome, <%= @user.name %>
+<h3>Welcome, <%= @user.name %></h3>
 <br></br>
-<a href="/locations">Your locations:</a>
+<h4><a href="/locations">Your locations:</a></h4>
 <% @user.locations.each do |location| %>
   <a href="/locations/<%= location.id %>"><%= location.name %></a>
   <br></br>
 <% end %>
 <br></br>
 
-<a href="/plants">Your plants:</a>
+<h4><a href="/plants">Your plants:</a></h4>
 <% @user.plants.each do |plant| %>
   <a href="/plants/<%= plant.id %>"><%= plant.name %></a>
   <br></br>
@@ -26,6 +26,7 @@ Welcome, <%= @user.name %>
 <a href="/plants/new">New plant</a>
 <br></br>
 <a href="/locations/new">New location</a>
+<br></br>
 
 <form action="/logout" method="get">
   <input type="submit" value="Logout">
