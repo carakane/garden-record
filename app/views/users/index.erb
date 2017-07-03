@@ -4,7 +4,6 @@
 <% end %>
 
 <h3>Welcome, <%= @user.name %></h3>
-<br></br>
 <h4><a href="/locations">Your locations:</a></h4>
 <% @user.locations.each do |location| %>
   <a href="/locations/<%= location.id %>"><%= location.name %></a>

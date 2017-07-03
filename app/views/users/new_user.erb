@@ -1,7 +1,7 @@
 <h3>New User Signup</h3>
 <form action="/signup" method="post">
   <label for="user[name]">Name:</label><input type="text" name="user[name]" required>
-  <label for="user[username]">Username:</label><input type="text" name="user[username]" pattern="[a-zA-Z0-9]" title="Numbers and letters only" required>
+  <label for="user[username]">Username:</label><input type="text" name="user[username]" pattern="[a-zA-Z0-9]{1,}" title="Numbers and letters only" required>
   <label for="user[email]">Email:</label><input type="email" name="user[email]" required>
   <label for="user[password]">Password:</label><input type="password" name="user[password]" required>
   <input type="submit" value="Submit">
