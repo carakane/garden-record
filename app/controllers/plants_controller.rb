@@ -22,17 +22,19 @@ class PlantsController < ApplicationController
   end
 
   post '/plants/new' do
+    @user = current_user
     @plant = Plant.create(params["plant"])
     if params["location"]
       @location = Location.find_by(:id => params["location"])
       @location.plants << @plant
+      @user.plants << @plant
     end
     if params["location_name"] != ""
-      @user = current_user
       @location = Location.create(:name => params["location_name"])
       flash[:message1] = "You have added #{@location.name}"
       @user.locations << @location
       @location.plants << @plant
+      @user.plants << @plant
     end
     flash[:message] = "You have added #{@plant.name}"
     redirect "/plants/#{@plant.id}"
@@ -42,10 +44,13 @@ class PlantsController < ApplicationController
     if logged_in?
       @user = current_user
       @plant = Plant.find_by(:id => params[:id])
-      erb :'/plants/show'
+      if @plant.user == @user
+        erb :'/plants/show'###
+      else
+        redirect "/users/#{@user.username}"
+      end
     else
-      flash[:message] = "Please Log In"
-      redirect '/login'
+      redirect "/users/#{@user.username}"
     end
   end
 

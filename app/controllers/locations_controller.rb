@@ -13,6 +13,7 @@ class LocationsController < ApplicationController
 
   get '/locations/new' do
     if logged_in?
+      @user = current_user
       erb :'/locations/new_location'
     else
       flash[:message] = "Please Log In"
