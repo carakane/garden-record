@@ -61,7 +61,26 @@ class LocationsController < ApplicationController
 
   patch '/locations/:id/edit' do
     @location = Location.find_by(:id => params[:id])
-    @location.update(:name => params["location_name"])
+
+    if params["location_name"] != ""
+      @location.update(:name => params["location_name"])
+    end
+
+    if params["plants"] != (@location.plants)
+      @location.plants.clear
+      @plants = Plant.where(:id => params["plants"])
+      @plants.each do |plant|
+        @location.plants << plant
+      end
+    end
+
+    if params["plant_name"] != ""
+      @user = current_user
+      @plant = Plant.create(:name => params["plant_name"])
+      @user.plants << @plant
+      @location.plants << @plant
+    end
+
     flash[:message] = "You have edited #{@location.name}"
     redirect "/locations/#{@location.id}"
   end

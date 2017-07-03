@@ -4,6 +4,17 @@
   Current Name:<%= @location.name %>
   <br></br>
   <label for="location_name">Location Name:</label><input type="text" name="location_name">
+
+  <br></br>
+  <h3>Choose an Existing Plant:</h3>
+  <% @user.plants.each do |plant| %>
+    <input type="checkbox" name="plants[]" value="<%= plant.id %>" <%='checked' if @location.plants.include?(plant) %>><%= plant.name %></input>
+  <% end %>
+
+  <br></br>
+  <label for="plant_name">And/or add a new plant:</label><input type="text" name="plant_name">
+
+
   <input type="submit" value="Edit">
 </form>
 

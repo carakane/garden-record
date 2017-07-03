@@ -80,7 +80,7 @@ class PlantsController < ApplicationController
       @plant.locations.clear
       @locations = Location.where(:id => params["locations"])
       @locations.each do |location|
-      @location.plants << @plant
+        @location.plants << @plant
       end
     end
 
