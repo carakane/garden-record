@@ -12,13 +12,19 @@ Specs:
 - [x] Include user accounts
     Users have accounts with usernames and passwords
 - [x] Ensure that users can't modify content created by other users
-    Cannot view other users' homepage, plants, locations
-- [ ] Include user input validations
-- [ ] Display validation failures to user with error message (example form URL e.g. /posts/new)
-- [ ] Your README.md includes a short description, install instructions, a contributors guide and a link to the license for your code
-
+    Cannot view other users' homepage, plants, locations, passwords
+- [x] Include user input validations
+    new plant/location cannot start with space, must have name; username restricted to alphanumeric
+- [x] Display validation failures to user with error message (example form URL e.g. /posts/new)
+    error messages on all incorrect inputs and flash messages on disallowed routes
+- [x] Your README.md includes a short description, install instructions, a contributors guide and a link to the license for your code
+    description, install, contributors guide, license
 Confirm
-- [ ] You have a large number of small Git commits
-- [ ] Your commit messages are meaningful
-- [ ] You made the changes in a commit that relate to the commit message
-- [ ] You don't include changes in a commit that aren't related to the commit message
+- [x] You have a large number of small Git commits
+    yes
+- [x] Your commit messages are meaningful
+    yes
+- [x] You made the changes in a commit that relate to the commit message
+    yes
+- [x] You don't include changes in a commit that aren't related to the commit message
+    I find this difficult sometimes, but generally yes
