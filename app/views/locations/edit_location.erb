@@ -1,11 +1,11 @@
-<form action="/locations/<%= @location.slug %>/edit" method="post">
+<form action="/locations/<%= @location.id %>/edit" method="post">
   <input id="hidden" type="hidden" name="_method" value="patch">
   <label for="location_name">Location Name:</label><input type="text" name="location_name" placeholder="<%= @location.name %>">
   <input type="submit" value="Edit">
 </form>
 
 
-<form action="/locations/<%= @location.slug %>/delete" method="post">
+<form action="/locations/<%= @location.id %>/delete" method="post">
   <input id="hidden" type="hidden" name="_method" value="delete">
   <input type="submit" value="Delete">
 </form>

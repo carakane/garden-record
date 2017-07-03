@@ -41,12 +41,10 @@ class PlantsController < ApplicationController
     redirect "/plants/#{@plant.slug}"
   end
 
-  get '/plants/:slug' do
+  get '/plants/:id' do
     if logged_in?
       @user = current_user
-      binding.pry
-      # @plant = Plant.find_by_slug(params[:slug])
-      @plant = @user.plants.find_by_slug(params[:slug])
+      @plant = Plant.find_by(:id => params[:id])
       erb :'/plants/show'
     else
       flash[:message] = "Please Log In"
@@ -54,9 +52,9 @@ class PlantsController < ApplicationController
     end
   end
 
-  get '/plants/:slug/edit' do
+  get '/plants/:id/edit' do
     if logged_in?
-      @plant = Plant.find_by_slug(params[:slug])
+      @plant = Plant.find_by(:id => params[:id])
       @user = current_user
       erb :'/plants/edit_plant'
     else
@@ -65,8 +63,8 @@ class PlantsController < ApplicationController
     end
   end
 
-  patch '/plants/:slug/edit' do
-    @plant = Plant.find_by_slug(params[:slug])
+  patch '/plants/:id/edit' do
+    @plant = Plant.find_by(:id => params[:id])
 
     if params["plant_name"] != ""
       @plant.update(:name => params["plant_name"])
@@ -91,9 +89,9 @@ class PlantsController < ApplicationController
     redirect "/plants/#{@plant.slug}"
   end
 
-  delete '/plants/:slug/delete' do
+  delete '/plants/:id/delete' do
     @user = current_user
-    @plant = Plant.find_by_slug(params[:slug])
+    @plant = Plant.find_by(:id => params[:id])
 
     @plant_location = PlantLocation.where(:plant_id => @plant)
     @plant_location.each do |entry|

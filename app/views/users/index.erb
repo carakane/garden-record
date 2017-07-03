@@ -7,14 +7,14 @@ Welcome, <%= @user.name %>
 <br></br>
 <a href="/locations">Your locations:</a>
 <% @user.locations.each do |location| %>
-  <a href="/locations/<%= location.slug %>"><%= location.name %></a>
+  <a href="/locations/<%= location.id %>"><%= location.name %></a>
   <br></br>
 <% end %>
 <br></br>
 
 <a href="/plants">Your plants:</a>
 <% @user.plants.each do |plant| %>
-  <a href="/plants/<%= plant.slug %>"><%= plant.name %></a>
+  <a href="/plants/<%= plant.id %>"><%= plant.name %></a>
   <br></br>
 <% end %>
 <br></br>

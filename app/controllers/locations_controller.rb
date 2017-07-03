@@ -29,10 +29,10 @@ class LocationsController < ApplicationController
     redirect "/locations/#{@location.slug}"
   end
 
-  get '/locations/:slug' do
+  get '/locations/:id' do
     if logged_in?
       @user = current_user
-      @location = Location.find_by_slug(params[:slug])
+      @location = Location.find_by(:id => params[:id])
       erb :'/locations/show'
     else
       flash[:message] = "Please Log In"
@@ -40,9 +40,9 @@ class LocationsController < ApplicationController
     end
   end
 
-  get '/locations/:slug/edit' do
+  get '/locations/:id/edit' do
     if logged_in?
-      @location = Location.find_by_slug(params[:slug])
+      @location = Location.find_by(:id => params[:id])
       erb :'/locations/edit_location'
     else
       flash[:message] = "Please Log In"
@@ -50,16 +50,16 @@ class LocationsController < ApplicationController
     end
   end
 
-  patch '/locations/:slug/edit' do
-    @location = Location.find_by_slug(params[:slug])
+  patch '/locations/:id/edit' do
+    @location = Location.find_by(:id => params[:id])
     @location.update(:name => params["location_name"])
     flash[:message] = "You have edited #{@location.name}"
     redirect "/locations/#{@location.slug}"
   end
 
-  delete '/locations/:slug/delete' do
+  delete '/locations/:id/delete' do
     @user = current_user
-    @location = Location.find_by_slug(params[:slug])
+    @location = Location.find_by(:id => params[:id])
 
     @plant_location = PlantLocation.where(:location_id => @location.id)
     @plant_location.each do |entry|

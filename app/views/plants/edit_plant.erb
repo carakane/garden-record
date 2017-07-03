@@ -1,5 +1,5 @@
 Edit Your Plant:
-<form action="/plants/<%= @plant.slug %>/edit" method="post">
+<form action="/plants/<%= @plant.id %>/edit" method="post">
   <input id="hidden" type="hidden" name="_method" value="patch">
   Current name: <%= @plant.name %>
   <label for="plant_name">New name:</label><input type="text" name="plant_name">
@@ -15,7 +15,7 @@ Edit Your Plant:
 </form>
 
 
-<form action="/plants/<%= @plant.slug %>/delete" method="post">
+<form action="/plants/<%= @plant.id %>/delete" method="post">
   <input id="hidden" type="hidden" name="_method" value="delete">
   <input type="submit" value="Delete">
 </form>
