@@ -1,6 +1,7 @@
 <form action="/locations/<%= @location.id %>/edit" method="post">
   <input id="hidden" type="hidden" name="_method" value="patch">
-  <label for="location_name">Location Name:</label><input type="text" name="location_name" placeholder="<%= @location.name %>">
+  Current Name:<%= @location.name %>
+  <label for="location_name">Location Name:</label><input type="text" name="location_name">
   <input type="submit" value="Edit">
 </form>
 

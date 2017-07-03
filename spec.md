@@ -12,7 +12,7 @@ Specs:
 - [x] Include user accounts
     Users have accounts with usernames and passwords
 - [x] Ensure that users can't modify content created by other users
-    Cannot view other users' homepage,
+    Cannot view other users' homepage, plants, locations
 - [ ] Include user input validations
 - [ ] Display validation failures to user with error message (example form URL e.g. /posts/new)
 - [ ] Your README.md includes a short description, install instructions, a contributors guide and a link to the license for your code
