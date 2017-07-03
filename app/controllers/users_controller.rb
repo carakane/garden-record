@@ -31,7 +31,7 @@ class UsersController < ApplicationController
       redirect "/users/#{@user.username}"
     else
       flash[:message] = "Please try again"
-      redirect '/users/login'
+      redirect '/login'
     end
   end
 
@@ -108,14 +108,15 @@ class UsersController < ApplicationController
   end
 
   patch '/users/:username/password' do
-    ## unnecessary code?
     if logged_in?
       @user = User.find_by(:id => params["id"])
       if @user.id == current_user.id && @user.authenticate(params["user"]["password"])
         @user.update(:password => params["user_password"])
         flash[:message] = "You have changed your password"
         redirect "/users/#{@user.username}"
-      else redirect "/users/#{@user.username}"
+      else
+        flash[:message] = "Please try again"
+        redirect "/users/#{@user.username}/password"
       end
     else
       flash[:message] = "Please Log In"
@@ -125,12 +126,12 @@ class UsersController < ApplicationController
 
 
   delete '/users/:username/delete' do
-    ##unnecessary code?
     if logged_in?
       @user = User.find_by(:id => params["id"])
       if @user.id == current_user.id && @user.authenticate(params["user"]["password"])
         @user.delete
         session.clear
+        flash[:message] = "You have deleted your account"
         redirect "/"
       else redirect "/users/#{@user.username}"
       end

@@ -29,7 +29,7 @@ class PlantsController < ApplicationController
       @location = Location.find_by(:id => params["location"])
       @location.plants << @plant
     end
-    if params["location_name"]
+    if params["location_name"] != ""
       # binding.pry
       @user = current_user
       @location = Location.create(:name => params["location_name"])
@@ -38,7 +38,7 @@ class PlantsController < ApplicationController
       @location.plants << @plant
     end
     flash[:message] = "You have added #{@plant.name}"
-    redirect "/plants/#{@plant.slug}"
+    redirect "/plants/#{@plant.id}"
   end
 
   get '/plants/:id' do
@@ -86,7 +86,7 @@ class PlantsController < ApplicationController
     end
 
     flash[:message] = "You have edited #{@plant.name}"
-    redirect "/plants/#{@plant.slug}"
+    redirect "/plants/#{@plant.id}"
   end
 
   delete '/plants/:id/delete' do

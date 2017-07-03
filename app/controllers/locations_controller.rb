@@ -26,7 +26,7 @@ class LocationsController < ApplicationController
     @location = Location.create(params["location"])
     @user.locations << @location
     flash[:message] = "You have created #{@location.name}"
-    redirect "/locations/#{@location.slug}"
+    redirect "/locations/#{@location.id}"
   end
 
   get '/locations/:id' do
@@ -54,7 +54,7 @@ class LocationsController < ApplicationController
     @location = Location.find_by(:id => params[:id])
     @location.update(:name => params["location_name"])
     flash[:message] = "You have edited #{@location.name}"
-    redirect "/locations/#{@location.slug}"
+    redirect "/locations/#{@location.id}"
   end
 
   delete '/locations/:id/delete' do
