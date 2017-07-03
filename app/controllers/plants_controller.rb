@@ -22,15 +22,12 @@ class PlantsController < ApplicationController
   end
 
   post '/plants/new' do
-    # binding.pry
     @plant = Plant.create(params["plant"])
     if params["location"]
-      # binding.pry
       @location = Location.find_by(:id => params["location"])
       @location.plants << @plant
     end
     if params["location_name"] != ""
-      # binding.pry
       @user = current_user
       @location = Location.create(:name => params["location_name"])
       flash[:message1] = "You have added #{@location.name}"

@@ -76,10 +76,8 @@ class UsersController < ApplicationController
   end
 
   patch '/users/:username/edit' do
-    ## unnecessary code?
     if logged_in?
       @user = User.find_by(:id => params["id"])
-      # binding.pry
       if @user.id == current_user.id && @user.authenticate(params["user"]["password"])
         @user.update(params["user"])
         flash[:message] = "You have edited your profile"
@@ -123,7 +121,6 @@ class UsersController < ApplicationController
       redirect :'/login'
     end
   end
-
 
   delete '/users/:username/delete' do
     if logged_in?

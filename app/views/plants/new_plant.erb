@@ -1,6 +1,6 @@
 New Plant
 <form action="/plants/new" method="post">
-  <label for="plant[name]">Name:</label><input type="text" name="plant[name]" required>
+  <label for="plant[name]">Name:</label><input type="text" name="plant[name]" pattern="^[^-\s][a-zA-Z0-9_\s-]+$" title="Cannot start with a space" required>
   <br></br>
   Chose an existing location:
   <% @user.locations.each do |location| %>
@@ -8,7 +8,7 @@ New Plant
   <% end %>
   <br></br>
 
-  <label for="location_name">And/or add a new location:</label><input type="text" name="location_name">
+  <label for="location_name">And/or add a new location:</label><input type="text" name="location_name" pattern="^[^-\s][a-zA-Z0-9_\s-]+$" title="Cannot start with a space">
 
   <input type="submit" value="Submit">
 </form>

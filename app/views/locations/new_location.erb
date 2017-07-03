@@ -1,6 +1,6 @@
 New Location
 <form action="/locations/new" method="post">
-  <label for="location[name]">Name:</label><input type="text" name="location[name]" required>
+  <label for="location[name]">Name:</label><input type="text" name="location[name]" pattern="^[^-\s][a-zA-Z0-9_\s-]+$" title="Cannot start with a space" required>
   <input type="submit" value="Submit">
 </form>
 

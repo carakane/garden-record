@@ -21,7 +21,6 @@ class LocationsController < ApplicationController
   end
 
   post '/locations/new' do
-    # binding.pry
     @user = current_user
     @location = Location.create(params["location"])
     @user.locations << @location
