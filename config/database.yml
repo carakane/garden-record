@@ -1,0 +1,22 @@
+default: &default
+  adapter: postgresql
+  pool: 5
+  timeout: 5000
+
+development:
+  adapter: postgresql
+  database: garden_postgresql
+  pool: 5
+  timeout: 5000
+
+test:
+  adapter: postgresql
+  database: test_postgresql
+  pool: 5
+  timeout: 5000
+
+production:
+  adapter: postgresql
+  database: production_postgresql
+  pool: 5
+  timeout: 5000
